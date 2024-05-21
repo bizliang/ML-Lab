@@ -8,4 +8,11 @@ Previously my anaconda navigator was not responding so I have rebooted my comput
 killall python
 ```
 
+## ERROR: Could not find a version that satisfies the requirement cv2
+
+![anaconda](./image/install-cv-error.jpg)
+
+fix:
+
+![img.png](image/install-cv-pycharm.png)
 
