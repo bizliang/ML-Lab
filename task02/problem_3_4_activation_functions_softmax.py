@@ -21,19 +21,32 @@ def reshape(array, input_dim, hidden_dim, output_dim):
     return W1, W2, b1, b2
 
 
-def forward(params, x, predict=False):
+def relu(z):
+    return np.maximum(0, z)
+
+def forward(params, x, input_dim, hidden_dim, output_dim, predict=False):
     """The forward pass to predict softmax probability distribution over class labels."""
 
-    W1, W2, b1, b2 = reshape(params)
+    W1, W2, b1, b2 = reshape(params, input_dim, hidden_dim, output_dim)
 
     # Forward propagation
-    '''
-    Your code here
-    follow 3.1 expression and input your code
-    Note: 
-    W1, W2 are the weights
-    b1, b2 are the bias
-    probs is your 3rd layer value
-    '''
+    z2 = np.dot(x, W1) + b1
+    # applying the activation function with relu
+    a2 = relu(z2)
+    z3 = np.dot(a2, W2) + b2
+    probs = softmax(z3)
 
     return np.argmax(probs, axis=1) if predict else probs
+
+# Example usage
+input_dim = 2  # example input dimension
+hidden_dim = 500  # example hidden layer dimension
+output_dim = 3  # example output dimension
+
+# Randomly initialize parameters for testing
+params = np.random.randn(input_dim * hidden_dim + hidden_dim * output_dim + hidden_dim + output_dim)
+x = np.random.randn(1, input_dim)  # example input
+
+# Forward pass
+probs = forward(params, x, input_dim, hidden_dim, output_dim)
+print(probs)
